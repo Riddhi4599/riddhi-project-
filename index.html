@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPulse — Track Your Carbon Footprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F9F5;--card:#fff;--ink:#16241C;--muted:#6F8579;--accent:#22B573;--ad:#159A60;--as:#D9F2E3;--line:#E1ECE5;--blue:#4C8BF5;--orange:#F5A623;--purple:#9B6CF6;--red:#E2574C;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px;}
+h1,h2,h3{font-family:'Poppins',sans-serif;}
+nav{position:sticky;top:0;z-index:50;background:rgba(243,249,245,0.95);border-bottom:1px solid var(--line);}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:18px;color:var(--ink);text-decoration:none;}
+.logo span{color:var(--accent);}
+nav ul{display:flex;gap:24px;list-style:none;}
+nav a{color:var(--ink);text-decoration:none;font-weight:500;font-size:14px;}
+nav a:hover{color:var(--ad);}
+.btn-g{background:var(--accent);color:#fff;padding:10px 20px;border-radius:24px;text-decoration:none;font-weight:600;font-size:14px;}
+@media(max-width:700px){nav ul{display:none;}}
+.hero{padding:60px 0 48px;}
+.hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--as);color:var(--ad);font-weight:600;font-size:13px;padding:7px 14px;border-radius:20px;margin-bottom:18px;}
+.hero h1{font-size:clamp(28px,5vw,46px);font-weight:800;line-height:1.2;margin-bottom:16px;}
+.hero h1 .g{color:var(--accent);}
+.hero p{color:var(--muted);font-size:15px;max-width:44ch;margin-bottom:24px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-p{background:var(--accent);color:#fff;border:none;padding:13px 26px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background 0.2s;}
+.btn-p:hover{background:var(--ad);}
+.btn-s{background:#fff;color:var(--ink);border:1px solid var(--line);padding:13px 26px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;}
+.illus{position:relative;height:300px;display:flex;align-items:center;justify-content:center;}
+.globe{width:210px;height:210px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#E8FBF0,var(--as) 45%,var(--accent));display:flex;align-items:center;justify-content:center;box-shadow:0 24px 48px -16px rgba(34,181,115,0.4);}
+.globe svg{width:100px;height:100px;}
+.fi{position:absolute;width:50px;height:50px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 6px 18px rgba(22,36,28,0.12);animation:bob 4s ease-in-out infinite;}
+.fi.a{top:8%;left:6%;animation-delay:0s;}
+.fi.b{bottom:12%;right:4%;animation-delay:1.2s;}
+.fi.c{bottom:2%;left:20%;animation-delay:2.4s;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@media(max-width:800px){.hero-grid{grid-template-columns:1fr;gap:28px;}.illus{height:200px;order:-1;}.globe{width:160px;height:160px;}}
+.sec{padding:56px 0;}
+.sec-head{text-align:center;max-width:56ch;margin:0 auto 36px;}
+.sec-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;margin-bottom:8px;}
+.sec-head p{color:var(--muted);font-size:14px;}
+.calc-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:0 8px 28px -16px rgba(22,36,28,0.14);}
+.calc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 28px;margin-bottom:28px;}
+.ig label{display:block;font-weight:600;font-size:13px;margin-bottom:8px;}
+.ic{display:flex;align-items:center;gap:12px;}
+input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:6px;background:var(--line);border-radius:3px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.2);}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid #fff;}
+.iv{font-weight:700;font-size:13px;min-width:70px;text-align:right;color:var(--ad);white-space:nowrap;}
+select{width:100%;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 12px;appearance:none;-webkit-appearance:none;cursor:pointer;}
+.btn-lg{width:100%;justify-content:center;padding:15px;font-size:15px;border-radius:10px;}
+@media(max-width:700px){.calc-grid{grid-template-columns:1fr;}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.sc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center;}
+.si{font-size:20px;margin-bottom:4px;}
+.sv{font-family:'Poppins',sans-serif;font-weight:800;font-size:26px;margin:4px 0 2px;}
+.sl{font-weight:600;font-size:13px;}
+.ss{font-size:11px;color:var(--muted);margin-top:3px;}
+.donut{width:90px;height:90px;border-radius:50%;margin:6px auto 4px;display:flex;align-items:center;justify-content:center;position:relative;}
+.donut::before{content:'';position:absolute;inset:10px;background:var(--card);border-radius:50%;}
+.dl{position:relative;font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr);}}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.cc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;}
+.cc h3{font-size:15px;font-weight:700;margin-bottom:18px;}
+.brow{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.bdonut{width:130px;height:130px;border-radius:50%;flex-shrink:0;position:relative;}
+.bdonut::before{content:'';position:absolute;inset:22px;background:var(--card);border-radius:50%;}
+.bcl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.bcl .bn{font-family:'Poppins',sans-serif;font-weight:800;font-size:17px;}
+.bcl .bu{font-size:10px;color:var(--muted);}
+.leg{flex:1;min-width:140px;}
+.lr{display:flex;align-items:center;justify-content:space-between;padding:6px 0;font-size:12px;}
+.ln{display:flex;align-items:center;gap:6px;}
+.ld{width:9px;height:9px;border-radius:50%;}
+.lp{font-weight:700;color:var(--muted);}
+.cr{margin-bottom:14px;}
+.cr:last-child{margin-bottom:0;}
+.cl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;}
+.cl .cn{font-weight:600;}
+.cl .cv{font-weight:700;color:var(--muted);}
+.ct{height:9px;background:var(--line);border-radius:5px;overflow:hidden;}
+.cf{height:100%;border-radius:5px;transition:width 0.4s ease;}
+.cf.you{background:var(--accent);}
+.cf.tgt{background:var(--blue);}
+.cf.avg{background:var(--orange);}
+@media(max-width:800px){.charts{grid-template-columns:1fr;}}
+.edu{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.ec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;transition:transform 0.2s,box-shadow 0.2s;}
+.ec:hover{transform:translateY(-3px);box-shadow:0 12px 28px -18px rgba(22,36,28,0.22);}
+.ei{width:44px;height:44px;border-radius:12px;background:var(--as);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;}
+.ec h3{font-size:16px;font-weight:700;margin-bottom:7px;}
+.ec p{color:var(--muted);font-size:13px;margin-bottom:12px;}
+.ec a{color:var(--ad);font-weight:600;font-size:13px;text-decoration:none;}
+@media(max-width:800px){.edu{grid-template-columns:1fr;}}
+footer{padding:36px 0;border-top:1px solid var(--line);}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+footer .fn{font-size:12px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo">🌿 Eco<span>Pulse</span></a>
+    <ul>
+      <li><a href="#calculator">Calculator</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#education">Education</a></li>
+    </ul>
+    <a class="btn-g" href="#calculator">Get Started</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">🌱 Join the Green Movement</div>
+      <h1>Track Your Carbon Footprint.<br><span class="g">Build a Greener Future.</span></h1>
+      <p>Understand your environmental impact and discover simple actions that help reduce emissions every day.</p>
+      <div class="hero-btns">
+        <a href="#calculator" class="btn-p">Calculate My Footprint →</a>
+        <a href="#education" class="btn-s">Learn More</a>
+      </div>
+    </div>
+    <div class="illus">
+      <div class="globe">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C12 2 6 7 6 13C6 17.4 8.7 21 12 21C15.3 21 18 17.4 18 13C18 7 12 2 12 2Z" fill="#159A60"/>
+          <path d="M12 6C12 6 9 9.5 9 13.5C9 16.5 10.3 19 12 19C13.7 19 15 16.5 15 13.5C15 9.5 12 6 12 6Z" fill="#22B573"/>
+        </svg>
+      </div>
+      <div class="fi a">💡</div>
+      <div class="fi b">⬇️</div>
+      <div class="fi c">🌱</div>
+    </div>
+  </div>
+</header>
+
+<section id="calculator" class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Step 1</div>
+      <h2>Calculate Your Footprint</h2>
+      <p>Adjust sliders and dropdowns to match your week — dashboard updates live.</p>
+    </div>
+    <div class="calc-card">
+      <div class="calc-grid">
+        <div class="ig">
+          <label>Car travel per week</label>
+          <div class="ic">
+            <input type="range" id="carKm" min="0" max="500" step="10" value="80">
+            <div class="iv" id="carKmVal">80 km</div>
+          </div>
+        </div>
+        <div class="ig">
+          <label>Fuel type</label>
+          <select id="fuelType">
+            <option value="0.192">Petrol</option>
+            <option value="0.171">Diesel</option>
+            <option value="0.053">Electric</option>
+            <option value="0">No car</option>
+          </select>
+        </div>
+        <div class="ig">
+          <label>Public transport per week</label>
+          <div class="ic">
+            <input type="range" id="transitKm" min="0" max="300" step="10" value="30">
+            <div class="iv" id="transitKmVal">30 km</div>
+          </div>
+        </div>
+        <div class="ig">
+          <label>Flights this year</label>
+          <select id="flights">
+            <option value="0">None</option>
+            <option value="250">1 short-haul</option>
+            <option value="900">1 long-haul</option>
+            <option value="1800">Multiple long-haul</option>
+          </select>
+        </div>
+        <div class="ig">
+          <label>Electricity per month</label>
+          <div class="ic">
+            <input type="range" id="electricity" min="0" max="600" step="10" value="180">
+            <div class="iv" id="electricityVal">180 kWh</div>
+          </div>
+        </div>
+        <div class="ig">
+          <label>Household size</label>
+          <div class="ic">
+            <input type="range" id="household" min="1" max="8" step="1" value="3">
+            <div class="iv" id="householdVal">3 ppl</div>
+          </div>
+        </div>
+        <div class="ig">
+          <label>Cooking / heating fuel</label>
+          <select id="cookFuel">
+            <option value="0.20">LPG</option>
+            <option value="0.05">Electric</option>
+            <option value="0.40">Wood / biomass</option>
+          </select>
+        </div>
+        <div class="ig">
+          <label>Typical diet</label>
+          <select id="diet">
+            <option value="2.5">Meat most days</option>
+            <option value="1.7" selected>Meat a few times a week</option>
+            <option value="1.1">Mostly vegetarian</option>
+            <option value="0.9">Fully plant-based</option>
+          </select>
+        </div>
+        <div class="ig">
+          <label>Food waste habit</label>
+          <select id="foodWaste">
+            <option value="1.2">Often throws food out</option>
+            <option value="1.0" selected>Sometimes</option>
+            <option value="0.85">Rarely wastes food</option>
+          </select>
+        </div>
+        <div class="ig">
+          <label>New items bought per month</label>
+          <div class="ic">
+            <input type="range" id="shopping" min="0" max="10" step="1" value="2">
+            <div class="iv" id="shoppingVal">2 items</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-p btn-lg" onclick="calcAndScroll()">Calculate My Footprint</button>
+    </div>
+  </div>
+</section>
+
+<section id="dashboard" class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Step 2</div>
+      <h2>Your Dashboard</h2>
+      <p>Live snapshot based on your inputs above.</p>
+    </div>
+    <div class="stats">
+      <div class="sc">
+        <div class="donut" id="ecoDonut"><div class="dl" id="ecoScore">--</div></div>
+        <div class="sl">Eco Score</div>
+        <div class="ss" id="ecoGrade">Grade —</div>
+      </div>
+      <div class="sc">
+        <div class="si">☁️</div>
+        <div class="sv" id="monthlyCO2">--</div>
+        <div class="sl">Monthly CO₂</div>
+        <div class="ss">kg CO₂e / month</div>
+      </div>
+      <div class="sc">
+        <div class="si">📈</div>
+        <div class="sv" id="annualT">--</div>
+        <div class="sl">Annual Forecast</div>
+        <div class="ss">tons CO₂e / year</div>
+      </div>
+      <div class="sc">
+        <div class="si">🌍</div>
+        <div class="sv" id="impact">--</div>
+        <div class="sl">Climate Impact</div>
+        <div class="ss" id="impactNote">—</div>
+      </div>
+    </div>
+    <div class="charts">
+      <div class="cc">
+        <h3>Emissions Breakdown</h3>
+        <div class="brow">
+          <div class="bdonut" id="bdonut">
+            <div class="bcl">
+              <div class="bn" id="bTotal">--</div>
+              <div class="bu">kg CO₂e</div>
+            </div>
+          </div>
+          <div class="leg" id="legend"></div>
+        </div>
+      </div>
+      <div class="cc">
+        <h3>Your Footprint vs Targets</h3>
+        <div class="cr">
+          <div class="cl"><span class="cn">You (estimated)</span><span class="cv" id="youVal">-- kg</span></div>
+          <div class="ct"><div class="cf you" id="youBar" style="width:0%"></div></div>
+        </div>
+        <div class="cr">
+          <div class="cl"><span class="cn">Recommended target</span><span class="cv">150 kg</span></div>
+          <div class="ct"><div class="cf tgt" style="width:50%"></div></div>
+        </div>
+        <div class="cr">
+          <div class="cl"><span class="cn">Typical average</span><span class="cv">300 kg</span></div>
+          <div class="ct"><div class="cf avg" style="width:100%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Knowledge Base</div>
+      <h2>Education Hub</h2>
+      <p>A few essentials worth understanding about your footprint.</p>
+    </div>
+    <div class="edu">
+      <div class="ec">
+        <div class="ei">🌍</div>
+        <h3>Climate Change</h3>
+        <p>Discover the fundamentals of global warming, greenhouse gases, and our planet's climate system.</p>
+        <a href="#">View Article →</a>
+      </div>
+      <div class="ec">
+        <div class="ei">⚡</div>
+        <h3>Renewable Energy</h3>
+        <p>Understand solar, wind, hydro, and geothermal energy sources that supply clean power.</p>
+        <a href="#">Read More →</a>
+      </div>
+      <div class="ec">
+        <div class="ei">♻️</div>
+        <h3>Recycling &amp; Circular Economy</h3>
+        <p>How reusing materials and handling waste properly prevents unnecessary emissions.</p>
+        <a href="#">Read More →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">🌿 Eco<span>Pulse</span></div>
+    <div class="fn">Figures are illustrative averages — not a certified carbon audit.</div>
+  </div>
+</footer>
+
+<script>
+function g(id){return document.getElementById(id);}
+
+var carKm=g('carKm'),transitKm=g('transitKm'),electricity=g('electricity'),household=g('household'),shopping=g('shopping');
+var fuelType=g('fuelType'),flights=g('flights'),cookFuel=g('cookFuel'),diet=g('diet'),foodWaste=g('foodWaste');
+
+function updateLabels(){
+  g('carKmVal').textContent=carKm.value+' km';
+  g('transitKmVal').textContent=transitKm.value+' km';
+  g('electricityVal').textContent=electricity.value+' kWh';
+  g('householdVal').textContent=household.value+' ppl';
+  g('shoppingVal').textContent=shopping.value+(shopping.value==1?' item':' items');
+}
+
+function getGrade(s){
+  if(s>=90)return{l:'A+',c:'#22B573'};
+  if(s>=80)return{l:'A',c:'#22B573'};
+  if(s>=70)return{l:'B+',c:'#159A60'};
+  if(s>=60)return{l:'B',c:'#F5A623'};
+  if(s>=50)return{l:'C',c:'#F5A623'};
+  return{l:'D',c:'#E2574C'};
+}
+
+function getImpact(s){
+  if(s>=75)return{l:'Low',c:'#22B573',n:'Within optimal range'};
+  if(s>=50)return{l:'Moderate',c:'#F5A623',n:'Some room to improve'};
+  return{l:'High',c:'#E2574C',n:'Above recommended range'};
+}
+
+function calculate(){
+  updateLabels();
+  var t=parseFloat(carKm.value)*parseFloat(fuelType.value)+parseFloat(transitKm.value)*0.04+parseFloat(flights.value)/52;
+  var e=(parseFloat(electricity.value)*0.7/4.33+18*parseFloat(cookFuel.value)/0.20)/parseFloat(household.value);
+  var f=20*parseFloat(diet.value)*parseFloat(foodWaste.value);
+  var gds=parseFloat(shopping.value)*12/4.33;
+  var weekly=t+e+f+gds;
+  var monthly=weekly*4.33;
+  var annual=(weekly*52)/1000;
+  var score=Math.round(124-0.149*monthly);
+  if(score<0)score=0; if(score>100)score=100;
+  var gr=getGrade(score);
+  var imp=getImpact(score);
+  g('ecoScore').textContent=score;
+  g('ecoDonut').style.background='conic-gradient('+gr.c+' 0% '+score+'%,#E1ECE5 '+score+'% 100%)';
+  g('ecoGrade').textContent='Grade '+gr.l;
+  g('ecoGrade').style.color=gr.c;
+  g('monthlyCO2').textContent=monthly.toFixed(0);
+  g('annualT').textContent=annual.toFixed(1);
+  g('impact').textContent=imp.l;
+  g('impact').style.color=imp.c;
+  g('impactNote').textContent=imp.n;
+  var cats=[{name:'Transport',val:t,color:'#22B573'},{name:'Home Energy',val:e,color:'#4C8BF5'},{name:'Food',val:f,color:'#F5A623'},{name:'Goods',val:gds,color:'#9B6CF6'}];
+  var tot=cats.reduce(function(s,c){return s+c.val;},0)||1;
+  var acc=0;
+  var stops=cats.map(function(c){var p=(c.val/tot)*100;var s=acc;acc+=p;return c.color+' '+s+'% '+acc+'%';}).join(',');
+  g('bdonut').style.background='conic-gradient('+stops+')';
+  g('bTotal').textContent=monthly.toFixed(0);
+  var leg=g('legend');leg.innerHTML='';
+  cats.forEach(function(c){var p=Math.round((c.val/tot)*100);var r=document.createElement('div');r.className='lr';r.innerHTML='<span class="ln"><span class="ld" style="background:'+c.color+'"></span>'+c.name+'</span><span class="lp">'+p+'%</span>';leg.appendChild(r);});
+  var scale=Math.max(monthly,300)*1.1;
+  g('youVal').textContent=monthly.toFixed(0)+' kg';
+  g('youBar').style.width=Math.min(100,(monthly/scale)*100)+'%';
+}
+
+[carKm,transitKm,electricity,household,shopping,fuelType,flights,cookFuel,diet,foodWaste].forEach(function(el){
+  el.addEventListener('input',calculate);
+  el.addEventListener('change',calculate);
+});
+
+function calcAndScroll(){calculate();g('dashboard').scrollIntoView({behavior:'smooth'});}
+
+calculate();
+</script>
+</body>
+</html>
